@@ -1,0 +1,68 @@
+BDD Test Cases
+
+Positive Test Cases
+
+Scenario: Successfully send an email with a subject and body
+
+Given the user is logged into Gmail
+When the user clicks on the Compose button
+And enters a valid recipient email
+And enters “Incubyte” in the Subject field
+And enters “QA test for Incubyte” in the Body field
+And clicks on the Send button
+Then the email should be sent successfully
+And it should appear in the Sent folder
+
+⸻
+
+Scenario: Verify the email appears in the Sent folder
+
+Given the user has successfully sent an email
+When the user navigates to the Sent folder
+Then the email should be present with the subject “Incubyte”
+And the body should be “QA test for Incubyte”
+
+⸻
+
+Scenario: Verify that the recipient receives the email
+
+Given the email has been sent successfully
+When the recipient checks their Inbox
+Then the email with subject “Incubyte” should be present
+And the body should be “QA test for Incubyte”
+
+⸻
+
+Negative Test Cases
+
+Scenario: Attempt to send an email without a recipient
+
+Given the user is logged into Gmail
+When the user clicks on the Compose button
+And enters “Incubyte” in the Subject field
+And enters “QA test for Incubyte” in the Body field
+And clicks on the Send button
+Then Gmail should display an error message indicating a recipient is required
+
+⸻
+
+Scenario: Attempt to send an email with an invalid recipient email
+
+Given the user is logged into Gmail
+When the user clicks on the Compose button
+And enters an invalid recipient email (e.g., “invalid_email”)
+And enters “Incubyte” in the Subject field
+And enters “QA test for Incubyte” in the Body field
+And clicks on the Send button
+Then Gmail should display an error message indicating the email address is invalid
+
+⸻
+
+Scenario: Verify that a draft is saved automatically when closing the compose window
+
+Given the user is logged into Gmail
+When the user clicks on the Compose button
+And enters “Incubyte” in the Subject field
+And enters “QA test for Incubyte” in the Body field
+And closes the Compose window without sending the email
+Then the email should be saved in the Drafts folder
